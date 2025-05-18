@@ -20,12 +20,12 @@
           x1e-nixos-config.nixosModules.x1e
           {
             networking.hostName = "system";
-            hardware.lenovo-yoga-slim7x.enable = true;
+            hardware.asus-zenbook-a14.enable = true;
 
             nixpkgs.hostPlatform.system = "aarch64-linux";
 
             # Uncomment this to allow unfree packages.
-            # nixpkgs.config.allowUnfree = true;
+            nixpkgs.config.allowUnfree = true;
 
             nix = {
               channel.enable = false;

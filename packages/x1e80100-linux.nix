@@ -9,12 +9,12 @@
 }:
 
 linuxPackagesFor (buildLinux {
-  src = fetchFromGitHub {
-    owner = "jhovold";
-    repo = "linux";
-    rev = "wip/x1e80100-6.15-rc6";
-    hash = "sha256-T/6rQGK0jQAdz5TNi0+LZIZL2yH4Sxi5jTinKzY9t/o=";
+  src = fetchgit {
+    url = "https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git";
+    rev = "refs/tags/next-20250516";
+    hash = "8e7386987569f6c99e6dc86d939476350049b9fd";
   };
+
   version = "6.15.0-rc6";
   defconfig = "johan_defconfig";
 
@@ -22,7 +22,6 @@ linuxPackagesFor (buildLinux {
     VIRTUALIZATION = yes;
     KVM = yes;
     MAGIC_SYSRQ = yes;
-    EC_LENOVO_YOGA_SLIM7X = module;
   };
 
   # TODO: Look into the errors and remove this.
@@ -30,33 +29,52 @@ linuxPackagesFor (buildLinux {
 
   kernelPatches = [
     {
-      name = "Add Bluetooth support for the Lenovo Yoga Slim 7x";
-      patch = fetchpatch {
-        # Bit contrived, to match the output path of the original FOD.
-        name = "9829ac9dd0e827cc62242d8ae8b534e31ffd00bd.patch";
-        url = "file://${./lenovo-yoga-slim7x-bluetooth.patch}";
-        hash = "sha256-2ZfDkbhriRb+52WNc6wlUKZPp55zKCJgxmkf/3m+m2M=";
+      name = "phy: qcom: phy-qcom-snps-eusb2: Make repeater optional";
+      patch = fetchurl {
+        url = "https://raw.githubusercontent.com/alexVinarskis/linux-x1e80100-zenbook-a14/refs/heads/master/0004-phy-qcom-phy-qcom-snps-eusb2-Make-repeater-optional.patch";
+        hash = "sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA="
       };
     }
     {
-      name = "dt-bindings: platform: Add bindings for Lenovo Yoga Slim 7x EC";
+      name = "dt-bindings: usb: Add Parade PS8833 Type-C retimer variant";
       patch = fetchurl {
-        url = "https://lore.kernel.org/linux-devicetree/20240927185345.3680-1-maccraft123mc@gmail.com/raw";
-        hash = "sha256-MHbAUR9KMy/DWOfyJBwW7MoM1FK8JmmNEpEvQ6NXJRU=";
+        url = "https://raw.githubusercontent.com/alexVinarskis/linux-x1e80100-zenbook-a14/refs/heads/master/0009-dt-bindings-usb-Add-Parade-PS8833-Type-C-retimer-var.patch";
+        hash = "sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA="
       };
     }
     {
-      name = "platform: arm64: Add driver for Lenovo Yoga Slim 7x's EC";
+      name = "arm64: dts: qcom: Add support for X1-based Asus Zenbook A14";
       patch = fetchurl {
-        url = "https://lore.kernel.org/platform-driver-x86/20240927185345.3680-2-maccraft123mc@gmail.com/raw";
-        hash = "sha256-LL88vnk5xvEcC1WVkV+R8aKW9gg43HHC8ZqwaHscfmg=";
+        url = "https://raw.githubusercontent.com/alexVinarskis/linux-x1e80100-zenbook-a14/refs/heads/master/0012-arm64-dts-qcom-Add-support-for-X1-based-Asus-Zenbook.patch";
+        hash = "sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA="
       };
     }
     {
-      name = "arm64: dts: qcom: Add EC to Lenovo Yoga Slim 7x";
+      name = "arm64: dts: qcom: support sound on Asus Zenbook A14";
       patch = fetchurl {
-        url = "https://lore.kernel.org/linux-arm-msm/20240927185345.3680-3-maccraft123mc@gmail.com/raw";
-        hash = "sha256-tnpo07ZPi/3cdiY9h90rf2UgTjr9ZfR1PYRVVQJ2pUQ=";
+        url = "https://raw.githubusercontent.com/alexVinarskis/linux-x1e80100-zenbook-a14/refs/heads/master/0013-arm64-dts-qcom-support-sound-on-Asus-Zenbook-A14.patch";
+        hash = "sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA="
+      };
+    }
+    {
+      name = "WIP: arm64: dts: qcom: HDMI support on Asus Zenbook A14";
+      patch = fetchurl {
+        url = "https://raw.githubusercontent.com/alexVinarskis/linux-x1e80100-zenbook-a14/refs/heads/master/0014-WIP-arm64-dts-qcom-HDMI-support-on-Asus-Zenbook-A14.patch";
+        hash = "sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA="
+      };
+    }
+    {
+      name = "arm64: dts: qcom: support camera on Asus Zenbook A14";
+      patch = fetchurl {
+        url = "https://raw.githubusercontent.com/alexVinarskis/linux-x1e80100-zenbook-a14/refs/heads/master/0015-arm64-dts-qcom-support-camera-on-Asus-Zenbook-A1.patch";
+        hash = "sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA="
+      };
+    }
+    {
+      name = "arm64: dts: qcom: x1-asus-zenbookk-a14.dtsi: rotate";
+      patch = fetchurl {
+        url = "https://raw.githubusercontent.com/alexVinarskis/linux-x1e80100-zenbook-a14/refs/heads/master/0017-arm64-dts-qcom-x1-asus-zenbookk-a14.dtsi-rotate-webc.patch";
+        hash = "sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA="
       };
     }
 

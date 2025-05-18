@@ -9,7 +9,7 @@
     }:
     let
       # Modify this if you are building on something other than x86_64-linux.
-      buildSystem = "x86_64-linux";
+      buildSystem = "aarch64-linux";
 
       nixpkgs-patched =
         let
@@ -66,7 +66,7 @@
             ./modules/common.nix
             {
               nixpkgs.pkgs = pkgs-cross;
-              hardware.lenovo-yoga-slim7x.enable = true;
+              hardware.asus-zenbook-a14.enable = true;
 
               # Required to evaluate packages from `pkgs-cross` on the device.
               isoImage.storeContents = [ nixpkgs-patched ];
@@ -82,11 +82,11 @@
               { lib, ... }:
               {
                 nixpkgs.pkgs = nixpkgs.legacyPackages.aarch64-linux;
-                hardware.lenovo-yoga-slim7x.enable = true;
+                hardware.asus-zenbook-a14.enable = true;
 
                 # Copy the cross-compiled kernel from the install ISO. Remove
                 # this if you want to natively compile the kernel on your device.
-                boot.kernelPackages = lib.mkForce pkgs-cross.x1e80100-linux;
+                #boot.kernelPackages = lib.mkForce pkgs-cross.x1e80100-linux;
               }
             )
           ];
